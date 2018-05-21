@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>welcome to webgl's world</title>
+    <link rel="stylesheet" href="../css/webglbook.css">
+    <style>
+        #container {
+            width: 95%;
+            height: 80%;
+            position: absolute;
+        }
+
+        #prompt {
+            width: 95%;
+            height: 6%;
+            position: absolute;
+        }
+    </style>
+    <script src="../libs/Three.js"></script>
+    <script src="../libs/RequestAnimationFrame.js"></script>
+</head>
+
+<body>
+    <center>
+        <h1>Welcome to WebGL</h1>
+    </center>
+    <div id="container">
+    </div>
+    <div id="prompt">
+        Click to animate the cube
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var renderer = null,
+            scene = null,
+            camera = null,
+            cube = null,
+            animating = false;
+
+        var container = document.querySelector('#container');
+        //创建three.js渲染器，并添加到<div>标签中
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        container.appendChild(renderer.domElement);
+        //创建three.js场景
+        scene = new THREE.Scene();
+        //创建相机，并添加到场景中
+        camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 1, 4000);
+        camera.position.set(0, 0, 3);
+        //创建一个平行光光源照射在物体上
+        var light = new THREE.DirectionalLight(0xffffff, 1.5);
+        light.position.set(0, 0, 3);
+        scene.add(light);
+
+        //创建一个接受光照并带有文理映射的立方体，并添加到场景中
+        //首先，创建一个带有纹理的立方体
+        var mapUrl = '../images/molumen_small_funny_angry_monster.jpg';
+        var map = THREE.ImageUtils.loadTexture(mapUrl);
+        //然后创建一个phong材质来处理着色，并传递给纹理映射。
+        var material = new THREE.MeshPhongMaterial({ map: map });
+        //创建一个立方体的几何体
+        var geometry = new THREE.CubeGeometry(1, 1, 1);
+        //将几何体和材质放到一个网格中
+        cube = new THREE.Mesh(geometry, material);
+        //设置网格在场景中的朝向，否则我们将不会看到立方体的形状
+        cube.rotation.x = Math.PI / 5;
+        cube.rotation.y = Math.PI / 5;
+        //将立方体添加到场景中
+        scene.add(cube);
+
+        addMouseHandler();
+        run();
+        //运行渲染循环
+        function run() {
+            renderer.render(scene, camera);
+            if (animating) {
+                cube.rotation.y -= 0.01;
+            }
+            requestAnimationFrame(run);
+        }
+
+        function addMouseHandler() {
+            var dom = renderer.domElement;
+            dom.addEventListener( 'mouseup', onMouseUp, false);
+        }
+
+        function onMouseUp(evt) {
+            evt.preventDefault();
+            animating = !animating;
+        }
+    }
+</script>
+
+</html>

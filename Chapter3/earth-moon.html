@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>earth moon</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000000;
+        }
+    </style>
+    <script src="../libs/Three.js"></script>
+    <script src="../libs/jquery-1.6.4.js"></script>
+    <script src="../libs/jquery.mousewheel.js"></script>
+    <script src="../sim/sim.js"></script>
+    <script src="./earth-moon.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+</body>
+<script>
+    var renderer = null;
+    var scene = null;
+    var camera = null;
+    var mesh = null;
+    $(function () {
+        var container = $('#container')[0];
+        var app = new EarthApp();
+        app.init({ container });
+        app.run();
+    });
+</script>
+
+</html>
