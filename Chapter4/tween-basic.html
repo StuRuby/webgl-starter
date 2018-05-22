@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tween basic</title>
+    <style>
+        #container {
+            width: 95%;
+            height: 80%;
+            position: absolute;
+        }
+
+        #prompt {
+            width: 95%;
+            height: 6%;
+            bottom: 0;
+            text-align: center;
+            position: absolute;
+        }
+    </style>
+    <link href="../css/webglbook.css" rel="stylesheet" />
+    <script src="../libs/Three.js"></script>
+    <script src="../libs/Tween.js"></script>
+    <script src="../libs/jquery-1.6.4.js"></script>
+    <script src="../libs/jquery.mousewheel.js"></script>
+    <script src="../libs/RequestAnimationFrame.js"></script>
+    <script src="../sim/sim.js"></script>
+    <script src="tween-basic.js"></script>
+</head>
+
+<body>
+    <center>
+        <h1>Basic Tween Example</h1>
+    </center>
+    <div id="container"></div>
+    <div id="prompt">
+        Click to run the tween animation
+    </div>
+</body>
+<script>
+    var renderer = null;
+    var scene = null;
+    var camera = null;
+    var mesh = null;
+    $(function () {
+        var container = $('#container')[0];
+        var app = new TweenApp();
+        app.init({ container });
+        app.run();
+    });
+</script>
+
+</html>
