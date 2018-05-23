@@ -5,6 +5,7 @@ RobotApp = function () {
 RobotApp.prototype = new Sim.App();
 
 RobotApp.prototype.init = function (params) {
+
     Sim.App.prototype.init.call(this, params);
 
     var light = new THREE.DirectionalLight(0xeeeeff, 1);
@@ -46,6 +47,7 @@ Robot = function () {
 Robot.prototype = new Sim.Object();
 
 Robot.prototype.init = function () {
+    // 创建装载机器人的群组
     var bodyGroup = new THREE.Object3D();
     this.setObject3D(bodyGroup);
 
@@ -60,10 +62,12 @@ Robot.prototype.init = function () {
 Robot.prototype.handleLoaded = function (data) {
     if (data) {
         var model = data.scene;
+        // 这个模型使用的单位是厘米，而我们的工作单位是米，要进行转换
         model.scale.set(0.01, 0.01, 0.01);
         this.object3D.add(model);
 
         var that = this;
+        // 遍历模型寻找带有名称的各个部分。
         THREE.SceneUtils.traverseHierarchy(model, function (n) {
             that.traverseCallback(n);
         });
@@ -73,6 +77,7 @@ Robot.prototype.handleLoaded = function (data) {
 }
 
 Robot.prototype.traverseCallback = function (n) {
+    // 找到需要发生动画效果的各个部分
     switch (n.name) {
         case 'jambe_G':
             this.left_leg = n;
